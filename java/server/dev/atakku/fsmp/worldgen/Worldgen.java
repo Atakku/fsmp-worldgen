@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.KeyDispatchDataCodec;
@@ -19,6 +19,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,7 @@ import dev.atakku.fsmp.worldgen.func.*;
 
 @Mod(Worldgen.MOD_ID)
 public class Worldgen {
-  public static final String MOD_ID = "fsmp-worldgen";
+  public static final String MOD_ID = "fsmp_worldgen";
   public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
   //public static byte[] BLEND_MAP = new byte[4096*4096]; // 0 - regular - 255 custom
@@ -34,14 +35,7 @@ public class Worldgen {
   //public static byte[] VEGETATION_MAP = new byte[4096*4096]; // 0 - no trees - 255 many trees
   public static byte[] CONTINENTALNESS_MAP = new byte[4096*4096]; // 0 - ocean - 255 inland
 
-  public Worldgen(IEventBus modEventBus, ModContainer modContainer) {
-        // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
-  }
-  
-  private void commonSetup(FMLCommonSetupEvent event) {
-    LOGGER.info("Initializing FSMP Worldgen");
-
+  public Worldgen(IEventBus bus) {
     try {
       BufferedImage img = ImageIO.read(new File("map.png"));
       for (int i = 0; i < 4096 * 4096; i++) {
@@ -55,16 +49,18 @@ public class Worldgen {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    
-    reg("continentalness_map", ContinentalnessMap.CODEC_HOLDER);
-    reg("x_add_z", XAddZ.CODEC_HOLDER);
-    reg("x_sub_z", XSubZ.CODEC_HOLDER);
 
-    reg("edge_ratio_neg", EdgeRatioNeg.CODEC_HOLDER);
-    reg("edge_ratio_pos", EdgeRatioPos.CODEC_HOLDER);
+    // Register the commonSetup method for modloading
+    bus.addListener(this::registerDensityFunctionTypes);
   }
 
-  private void reg(String name, KeyDispatchDataCodec<? extends DensityFunction> c) {
-    Registry.register(BuiltInRegistries.DENSITY_FUNCTION_TYPE, ResourceLocation.fromNamespaceAndPath(MOD_ID, name), c.codec());
+  private void registerDensityFunctionTypes(final RegisterEvent event) {
+    event.register(Registries.DENSITY_FUNCTION_TYPE, helper -> {
+        helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "continentalness_map"), ContinentalnessMap.CODEC_HOLDER.codec());
+        helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "x_add_z"), XAddZ.CODEC_HOLDER.codec());
+        helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "x_sub_z"), XSubZ.CODEC_HOLDER.codec());
+        helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "edge_ratio_neg"), EdgeRatioNeg.CODEC_HOLDER.codec());
+        helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "edge_ratio_pos"), EdgeRatioPos.CODEC_HOLDER.codec());
+    });
   }
 }
