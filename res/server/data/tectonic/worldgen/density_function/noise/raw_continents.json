@@ -1,0 +1,67 @@
+{
+  "type": "minecraft:flat_cache",
+  "argument": {
+    "type": "minecraft:max",
+    "argument1": -0.46,
+    "argument2": {
+      "type": "minecraft:add",
+      "argument1": {
+        "type": "minecraft:mul",
+        "argument1": {
+          "type": "fsmp-worldgen:edge_ratio_pos"
+        },
+        "argument2": -0.46
+      },
+      "argument2": {
+        "type": "minecraft:mul",
+        "argument1": {
+          "type": "fsmp-worldgen:edge_ratio_neg"
+        },
+        "argument2": {
+          "type": "minecraft:add",
+          "argument1": {
+            "type": "minecraft:mul",
+            "argument1": 0.5,
+            "argument2": {
+              "type": "fsmp-worldgen:continentalness_map"
+            }
+          },
+          "argument2": {
+            "type": "minecraft:max",
+            "argument1": -0.46,
+            "argument2": {
+              "type": "minecraft:mul",
+              "argument1": 0.5,
+              "argument2": {
+                "type": "minecraft:spline",
+                "spline": {
+                  "coordinate": {
+                    "type": "minecraft:abs",
+                    "argument": "tectonic:__constants/noise/continents"
+                  },
+                  "points": [
+                    {
+                      "location": 0,
+                      "value": 0,
+                      "derivative": 0
+                    },
+                    {
+                      "location": 0.4,
+                      "value": 0.575,
+                      "derivative": 1
+                    },
+                    {
+                      "location": 0.48,
+                      "value": 0.68,
+                      "derivative": 1
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
