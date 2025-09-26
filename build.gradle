@@ -2,4 +2,4 @@
 //
 // This project is dual licensed under MIT and Apache.
 
-apply from: 'https://raw.githubusercontent.com/Atakku/gradle/v49/neoforge_build.gradle'
+apply from: 'https://raw.githubusercontent.com/Atakku/gradle/v50/neoforge_build.gradle'
