@@ -5,6 +5,7 @@
 package dev.atakku.fsmp.worldgen.func;
 
 import net.minecraft.util.KeyDispatchDataCodec;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.levelgen.DensityFunction;
 
 import com.mojang.serialization.MapCodec;
@@ -17,24 +18,16 @@ public class ContinentalnessMap implements DensityFunction.SimpleFunction {
 
   @Override
   public double compute(DensityFunction.FunctionContext pos) {
-    int x = pos.blockX();
-    int z = pos.blockZ();
-    return (compute(x - 1, z - 1) +
-        compute(x - 1, z) +
-        compute(x - 1, z + 1) +
-        compute(x, z - 1) +
-        compute(x, z) +
-        compute(x, z + 1) +
-        compute(x + 1, z - 1) +
-        compute(x + 1, z) +
-        compute(x + 1, z + 1)) / 9.0;
+    int x = Math.max(Math.min(pos.blockX() + 8192, 16383), 0);
+    int y = Math.max(Math.min(pos.blockZ() + 8192, 16383), 0);
+
+    return Mth.lerp2(x%4/4.0, y%4/4.0, p(x, y), p(x+1, y), p(x, y+1), p(x, y+1));
   }
 
-  public static final double compute(int bx, int bz) {
-    int x = Math.max(Math.min(bx + 8192, 16383), 0) / 4;
-    int z = Math.max(Math.min(bz + 8192, 16383), 0) / 4;
-    double amplitude = (Worldgen.CONTINENTALNESS_MAP[x + z * 4096] & 0xFF) / 255.0d;
-    return amplitude * 2.0d - 1.0d;
+  public static final double p(int x, int z) {
+    int bx = Math.max(0, Math.min(x, 4095));
+    int bz = Math.max(0, Math.min(z, 4095));
+    return (Worldgen.CONTINENTALNESS_MAP[bx + bz * 4096] & 0xFF) / 255.0d * 2.0d - 1.0d;
   }
 
   @Override
