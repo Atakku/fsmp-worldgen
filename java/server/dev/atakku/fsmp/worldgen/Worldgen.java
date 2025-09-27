@@ -7,13 +7,24 @@ package dev.atakku.fsmp.worldgen;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Optional;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackLocationInfo;
+import net.minecraft.server.packs.PackSelectionConfig;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.PathPackResources;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 
 import javax.imageio.ImageIO;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +58,7 @@ public class Worldgen {
 
     // Register the commonSetup method for modloading
     bus.addListener(this::registerDensityFunctionTypes);
+    bus.addListener(this::registerEnabledPacks);
   }
 
   private void registerDensityFunctionTypes(final RegisterEvent event) {
@@ -57,5 +69,29 @@ public class Worldgen {
         helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "x_sub_z"), XSubZ.CODEC_HOLDER.codec());
         helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "edge_ratio"), EdgeRatio.CODEC_HOLDER.codec());
     });
+  }
+
+  // Taken from https://github.com/Apollounknowndev/tectonic/blob/v3/src/main/java/dev/worldgen/tectonic/loaders/neoforge/TectonicNeoforge.java
+  private void registerEnabledPacks(final AddPackFindersEvent event) {
+    if (event.getPackType() == PackType.SERVER_DATA) {
+        Path resourcePath = ModList.get().getModFileById(Worldgen.MOD_ID).getFile().findResource("patch");
+
+        Pack dataPack = Pack.readMetaAndCreate(
+            new PackLocationInfo(
+                resourcePath.getFileName().toString(),
+                Component.literal("fsmp-worldgen"),
+                PackSource.BUILT_IN,
+                Optional.empty()
+            ),
+            new PathPackResources.PathResourcesSupplier(resourcePath),
+            PackType.SERVER_DATA,
+            new PackSelectionConfig(
+                true,
+                Pack.Position.TOP,
+                false
+            )
+        );
+        event.addRepositorySource((packConsumer) -> packConsumer.accept(dataPack));
+    }
   }
 }
