@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:lerp",
+  "type": "fsmp_worldgen:lerp",
   "delta": 0.0,
   "start": {
     "type": "minecraft:clamp",
