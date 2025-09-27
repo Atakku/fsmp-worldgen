@@ -9,13 +9,19 @@ displayName="${mod_name}"
 description='''${mod_name}'''
 
 [[dependencies.${mod_id}]]
+    modId="tectonic"
+    type="required"
+    versionRange="[3]"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
     modId="neoforge"
     type="required"
     versionRange="[${neo_version},)"
     ordering="NONE"
     side="BOTH"
 
-# Here's another dependency
 [[dependencies.${mod_id}]]
     modId="minecraft"
     type="required"

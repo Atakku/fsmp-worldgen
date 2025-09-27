@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:lerp",
+  "delta": 0.0,
+  "start": {
+    "type": "minecraft:clamp",
+    "min": -1.0,
+    "max": 1.0,
+    "input": {
+      "type": "minecraft:mul",
+      "argument1": 0.0001,
+      "argument2": {
+        "type": "fsmp_worldgen:x_add_z"
+      }
+    }
+  },
+  "end": "tectonic:__constants/noise/temperature"
+}
