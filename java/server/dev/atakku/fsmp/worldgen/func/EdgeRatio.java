@@ -4,22 +4,26 @@
 
 package dev.atakku.fsmp.worldgen.func;
 
+import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.world.level.levelgen.DensityFunction;
 
-abstract class EdgeRatioAbstract implements DensityFunction.SimpleFunction {
+import com.mojang.serialization.MapCodec;
+
+public class EdgeRatio implements DensityFunction.SimpleFunction {
+  public static final KeyDispatchDataCodec<EdgeRatio> CODEC_HOLDER = KeyDispatchDataCodec.of(MapCodec.unit(EdgeRatio::new));
+
   private static final int SIZE = 256;
   private static final int END = 8192;
   private static final int START = END - SIZE;
 
-  protected static double compute(DensityFunction.FunctionContext pos, boolean neg) {
+  public double compute(DensityFunction.FunctionContext pos) {
     int absX = Math.min(Math.abs(pos.blockX()), END);
     int absZ = Math.min(Math.abs(pos.blockZ()), END);
     if (absX < START && absZ < START) {
-      return neg ? 1 : 0;
+      return 0;
     }
     int point = Math.max(absX, absZ) - START;
-    double r = ((double) point / (double) SIZE);
-    return neg ? 1 - r : r;
+    return ((double) point / (double) SIZE);
   }
 
   @Override
@@ -30,5 +34,10 @@ abstract class EdgeRatioAbstract implements DensityFunction.SimpleFunction {
   @Override
   public double maxValue() {
     return 1;
+  }
+
+  @Override
+  public KeyDispatchDataCodec<? extends DensityFunction> codec() {
+    return CODEC_HOLDER;
   }
 }

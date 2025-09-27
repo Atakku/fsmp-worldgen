@@ -51,11 +51,11 @@ public class Worldgen {
 
   private void registerDensityFunctionTypes(final RegisterEvent event) {
     event.register(Registries.DENSITY_FUNCTION_TYPE, helper -> {
-        helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "continentalness_map"), ContinentalnessMap.CODEC_HOLDER.codec());
+        helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "lerp"), Lerp.CODEC_HOLDER.codec());
+        helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "raster_map"), RasterMap.CODEC_HOLDER.codec());
         helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "x_add_z"), XAddZ.CODEC_HOLDER.codec());
         helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "x_sub_z"), XSubZ.CODEC_HOLDER.codec());
-        helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "edge_ratio_neg"), EdgeRatioNeg.CODEC_HOLDER.codec());
-        helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "edge_ratio_pos"), EdgeRatioPos.CODEC_HOLDER.codec());
+        helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "edge_ratio"), EdgeRatio.CODEC_HOLDER.codec());
     });
   }
 }
