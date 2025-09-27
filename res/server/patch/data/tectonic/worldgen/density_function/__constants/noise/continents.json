@@ -1,0 +1,30 @@
+{
+  "type": "fsmp_worldgen:lerp",
+  "delta": {
+    "type": "fsmp_worldgen:edge_ratio"
+  },
+  "start": {
+    "type": "fsmp_worldgen:lerp",
+    "delta": 0.5,
+    "start": {
+      "type": "fsmp_worldgen:lerp",
+      "delta": {
+        "type": "fsmp_worldgen:raster_map"
+      },
+      "start": -1.0,
+      "end": 1.0
+    },
+    "end": {
+      "type": "minecraft:max",
+      "argument1": -0.46,
+      "argument2": {
+        "type": "tectonic:config_noise",
+        "noise": "tectonic:parameter/continentalness",
+        "key": "continents",
+        "shift_x": "minecraft:shift_x",
+        "shift_z": "minecraft:shift_z"
+      }
+    }
+  },
+  "end": -0.46
+}
