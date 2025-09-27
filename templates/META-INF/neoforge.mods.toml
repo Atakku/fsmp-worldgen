@@ -11,7 +11,7 @@ description='''${mod_name}'''
 [[dependencies.${mod_id}]]
     modId="tectonic"
     type="required"
-    versionRange="[3]"
+    versionRange="[3.0.13,)"
     ordering="AFTER"
     side="BOTH"
 
