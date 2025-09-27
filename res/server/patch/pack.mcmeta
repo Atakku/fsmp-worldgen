@@ -1,6 +1,7 @@
 {
   "pack": {
-    "pack_format": 34,
+    "supported_formats": [48,71],
+    "pack_format": 71,
     "description": "tectonic patch"
   }
 }
