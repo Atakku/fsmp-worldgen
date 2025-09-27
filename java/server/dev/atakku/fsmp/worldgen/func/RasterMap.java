@@ -16,25 +16,19 @@ public class RasterMap implements DensityFunction.SimpleFunction {
       .of(MapCodec.unit(RasterMap::new));
 
   @Override
-  public double compute(DensityFunction.FunctionContext pos) {    
+  public double compute(DensityFunction.FunctionContext pos) {
     int x = pos.blockX();
     int z = pos.blockZ();
-
-    return (p(x - 1, z - 1) +
-        p(x - 1, z) +
-        p(x - 1, z + 1) +
-        p(x, z - 1) +
-        p(x, z) +
-        p(x, z + 1) +
-        p(x + 1, z - 1) +
-        p(x + 1, z) +
-        p(x + 1, z + 1)) / 9.0;
+    return (row(x - 1, z) + row(x, z) + row(x + 1, z)) / 3.0;
   }
 
-  public static final double p(int bx, int bz) {
+  public static final double row(int x, int z) {
+    return (smpl(x, z - 1) + smpl(x, z) + smpl(x, z + 1)) / 3.0;
+  }
+
+  public static final double smpl(int bx, int bz) {
     int x = Math.max(Math.min(bx + 8192, 16383), 0) / 4;
     int z = Math.max(Math.min(bz + 8192, 16383), 0) / 4;
-    //double amplitude = (Worldgen.CONTINENTALNESS_MAP[x + z * 4096] & 0xFF) / 255.0d;
     return (Worldgen.CONTINENTALNESS_MAP[x + z * 4096] & 0xFF) / 255.0d;
   }
 
