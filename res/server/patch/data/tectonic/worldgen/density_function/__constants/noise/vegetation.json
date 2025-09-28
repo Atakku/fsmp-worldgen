@@ -1,26 +1,15 @@
 {
   "type": "minecraft:flat_cache",
   "argument": {
-    "type": "fsmp_worldgen:lerp",
-    "delta": 0.0,
-    "start": {
-      "type": "minecraft:clamp",
-      "min": -1.0,
-      "max": 1.0,
-      "input": {
-        "type": "minecraft:mul",
-        "argument1": 0.0001,
-        "argument2": {
-          "type": "fsmp_worldgen:x_sub_z"
-        }
+    "type": "minecraft:clamp",
+    "min": -1.0,
+    "max": 1.0,
+    "input": {
+      "type": "minecraft:mul",
+      "argument1": 0.0001,
+      "argument2": {
+        "type": "fsmp_worldgen:x_sub_z"
       }
-    },
-    "end": {
-      "type": "tectonic:config_noise",
-      "noise": "minecraft:vegetation",
-      "key": "vegetation",
-      "shift_x": "minecraft:shift_x",
-      "shift_z": "minecraft:shift_z"
     }
   }
 }
