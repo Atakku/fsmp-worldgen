@@ -35,6 +35,11 @@ import dev.atakku.fsmp.worldgen.func.*;
 public class Worldgen {
   public static final String MOD_ID = "fsmp_worldgen";
   public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+  
+  public static final int SIZE = 1536;
+  public static final int END = 10240;
+  public static final int START = END - SIZE;
+  public static final int EDGE = START - SIZE;
 
   //public static byte[] BLEND_MAP = new byte[4096*4096]; // 0 - regular - 255 custom
   //public static byte[] TEMPERATURE_MAP = new byte[4096*4096]; // 0 - cold - 255 hot
@@ -63,11 +68,12 @@ public class Worldgen {
 
   private void registerDensityFunctionTypes(final RegisterEvent event) {
     event.register(Registries.DENSITY_FUNCTION_TYPE, helper -> {
+        helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "edge_ratio"), EdgeRatio.CODEC_HOLDER.codec());
+        helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "land_ratio"), LandRatio.CODEC_HOLDER.codec());
         helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "lerp"), Lerp.CODEC_HOLDER.codec());
         helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "raster_map"), RasterMap.CODEC_HOLDER.codec());
         helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "x_add_z"), XAddZ.CODEC_HOLDER.codec());
         helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "x_sub_z"), XSubZ.CODEC_HOLDER.codec());
-        helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "edge_ratio"), EdgeRatio.CODEC_HOLDER.codec());
     });
   }
 
@@ -79,7 +85,7 @@ public class Worldgen {
         Pack dataPack = Pack.readMetaAndCreate(
             new PackLocationInfo(
                 resourcePath.getFileName().toString(),
-                Component.literal("fsmp-worldgen"),
+                Component.literal("_fsmp-worldgen"),
                 PackSource.BUILT_IN,
                 Optional.empty()
             ),

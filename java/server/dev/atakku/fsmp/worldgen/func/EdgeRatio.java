@@ -9,21 +9,29 @@ import net.minecraft.world.level.levelgen.DensityFunction;
 
 import com.mojang.serialization.MapCodec;
 
-public class EdgeRatio implements DensityFunction.SimpleFunction {
-  public static final KeyDispatchDataCodec<EdgeRatio> CODEC_HOLDER = KeyDispatchDataCodec.of(MapCodec.unit(EdgeRatio::new));
+import dev.atakku.fsmp.worldgen.Worldgen;
 
-  private static final int SIZE = 256;
-  private static final int END = 8192;
-  private static final int START = END - SIZE;
+public class EdgeRatio implements DensityFunction.SimpleFunction {
+  public static final KeyDispatchDataCodec<EdgeRatio> CODEC_HOLDER = KeyDispatchDataCodec
+      .of(MapCodec.unit(EdgeRatio::new));
 
   public double compute(DensityFunction.FunctionContext pos) {
-    int absX = Math.min(Math.abs(pos.blockX()), END);
-    int absZ = Math.min(Math.abs(pos.blockZ()), END);
-    if (absX < START && absZ < START) {
-      return 0;
+    int distX = Math.min(Math.abs(pos.blockX()), Worldgen.END);
+    int distZ = Math.min(Math.abs(pos.blockZ()), Worldgen.END);
+
+    int edgeX = distX - Worldgen.EDGE;
+    int edgeZ = distZ - Worldgen.EDGE;
+    if (edgeX > 0 && edgeZ > 0) {
+      double dist = Math.sqrt(edgeX * edgeX + edgeZ * edgeZ) - Worldgen.SIZE;
+      if (dist < 0)
+        return 0;
+      if (dist > Worldgen.SIZE)
+        return 1;
+      return (dist / (Worldgen.SIZE));
     }
-    int point = Math.max(absX, absZ) - START;
-    return ((double) point / (double) SIZE);
+
+    int point = Math.max(distX, distZ) - Worldgen.START;
+    return ((double) Math.max(0, point) / (double) Worldgen.SIZE);
   }
 
   @Override

@@ -10,7 +10,8 @@ import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.levelgen.DensityFunction;
 
-public record Lerp(DensityFunction delta, DensityFunction start, DensityFunction end) implements DensityFunction.SimpleFunction {
+public record Lerp(DensityFunction delta, DensityFunction start, DensityFunction end)
+    implements DensityFunction.SimpleFunction {
   public static final KeyDispatchDataCodec<Lerp> CODEC_HOLDER = KeyDispatchDataCodec
       .of(RecordCodecBuilder.mapCodec(instance -> instance.group(
           DensityFunction.HOLDER_HELPER_CODEC.fieldOf("delta").forGetter(Lerp::delta),
@@ -20,7 +21,18 @@ public record Lerp(DensityFunction delta, DensityFunction start, DensityFunction
 
   @Override
   public double compute(DensityFunction.FunctionContext pos) {
-    return Mth.lerp(this.delta.compute(pos), this.start.compute(pos), this.end.compute(pos));
+    double deltaClamped = Math.clamp(this.delta.compute(pos), 0, 1);
+    return Mth.lerp(deltaClamped, this.start.compute(pos), this.end.compute(pos));
+  }
+
+  @Override
+  public void fillArray(double[] doubles, ContextProvider ctx) {
+    ctx.fillAllDirectly(doubles, this);
+  }
+
+  @Override
+  public DensityFunction mapAll(Visitor visitor) {
+    return visitor.apply(new Lerp(delta.mapAll(visitor), start.mapAll(visitor), end.mapAll(visitor)));
   }
 
   @Override
