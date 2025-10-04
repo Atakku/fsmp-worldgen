@@ -19,6 +19,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.world.level.ChunkPos;
 
 //import javax.imageio.ImageIO;
 import net.neoforged.bus.api.IEventBus;
@@ -40,6 +41,7 @@ public class Worldgen {
   public static final int END = 10240;
   public static final int START = END - SIZE;
   public static final int EDGE = START - SIZE;
+  public static final int CR = END / 16;
 
   //public static byte[] BLEND_MAP = new byte[4096*4096]; // 0 - regular - 255 custom
   //public static byte[] TEMPERATURE_MAP = new byte[4096*4096]; // 0 - cold - 255 hot
@@ -99,5 +101,9 @@ public class Worldgen {
         );
         event.addRepositorySource((packConsumer) -> packConsumer.accept(dataPack));
     }
+  }
+
+  public static boolean isOutside(ChunkPos p) {
+    return p.x >= CR || p.z >= CR || p.x < -CR || p.z < -CR;
   }
 }
