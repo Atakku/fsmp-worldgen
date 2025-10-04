@@ -105,10 +105,10 @@ public class MixinNoiseBasedChunkGenerator {
 
   private static BlockState getState(ResourceLocation dim) {
     if (dim == NoiseGeneratorSettings.OVERWORLD.location()) {
-      return END_WALL;
+      return OVERWORLD_WALL;
     } else if (dim == NoiseGeneratorSettings.NETHER.location()) {
       return NETHER_WALL;
     }
-    return OVERWORLD_WALL;
+    return END_WALL;
   }
 }
