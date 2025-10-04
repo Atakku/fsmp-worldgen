@@ -4,8 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "client": [],
   "mixins": [
-    "MixinChunkGenerator",
-    "MixinNoiseBasedChunkGenerator"
+    "MixinSharedConstants"
   ],
   "injectors": {
     "defaultRequire": 1
