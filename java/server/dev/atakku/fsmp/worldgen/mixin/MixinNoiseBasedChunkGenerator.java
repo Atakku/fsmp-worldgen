@@ -1,7 +1,6 @@
 package dev.atakku.fsmp.worldgen.mixin;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -32,7 +31,7 @@ import dev.atakku.fsmp.worldgen.Worldgen;
 @Mixin(NoiseBasedChunkGenerator.class)
 public class MixinNoiseBasedChunkGenerator {
   @Inject(at = @At("HEAD"), cancellable = true, method = "doCreateBiomes(Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/chunk/ChunkAccess;)V")
-  private void doCreateBiomes(Executor e, RandomState nc, Blender b, StructureManager sa, ChunkAccess c,
+  private void doCreateBiomes(Blender b, RandomState nc, StructureManager sa, ChunkAccess c,
       CallbackInfoReturnable<CompletableFuture<ChunkAccess>> cir) {
     if (Worldgen.isOutside(c.getPos())) {
       cir.setReturnValue(CompletableFuture.completedFuture(c));
@@ -63,7 +62,7 @@ public class MixinNoiseBasedChunkGenerator {
   }
 
   @Inject(at = @At("HEAD"), cancellable = true, method = "doFill(Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/chunk/ChunkAccess;II)Lnet/minecraft/world/level/chunk/ChunkAccess;")
-  private void doFill(Executor e, Blender b, RandomState nc, StructureManager sa, ChunkAccess c,
+  private void doFill(Blender b, StructureManager sa, RandomState nc, ChunkAccess c, int mY, int cY,
       CallbackInfoReturnable<CompletableFuture<ChunkAccess>> cir) {
     ChunkPos p = c.getPos();
     if (Worldgen.isOutside(p)) {
