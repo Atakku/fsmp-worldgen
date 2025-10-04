@@ -4,9 +4,9 @@
 
 package dev.atakku.fsmp.worldgen;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+//import java.awt.image.BufferedImage;
+//import java.io.File;
+//import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -20,7 +20,7 @@ import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 
-import javax.imageio.ImageIO;
+//import javax.imageio.ImageIO;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
@@ -47,19 +47,19 @@ public class Worldgen {
   public static byte[] CONTINENTALNESS_MAP = new byte[4096*4096]; // 0 - ocean - 255 inland
 
   public Worldgen(IEventBus bus) {
-    try {
-      BufferedImage img = ImageIO.read(new File("map.png"));
-      for (int i = 0; i < 4096 * 4096; i++) {
-        int pixel = img.getRGB(i%4096, i/4096);
-        //Worldgen.BLEND_MAP[i] = (byte) ((pixel & 0xff000000) >> 24);
-        //Worldgen.TEMPERATURE_MAP[i] = (byte) ((pixel & 0x00ff0000) >> 16);
-        //Worldgen.VEGETATION_MAP[i] = (byte) ((pixel & 0x0000ff00) >> 8);
-        Worldgen.CONTINENTALNESS_MAP[i] = (byte) (pixel & 0x000000ff);
-      }
-      LOGGER.info("Loaded sample map");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    //try {
+    //  BufferedImage img = ImageIO.read(new File("map.png"));
+    //  for (int i = 0; i < 4096 * 4096; i++) {
+    //    int pixel = img.getRGB(i%4096, i/4096);
+    //    //Worldgen.BLEND_MAP[i] = (byte) ((pixel & 0xff000000) >> 24);
+    //    //Worldgen.TEMPERATURE_MAP[i] = (byte) ((pixel & 0x00ff0000) >> 16);
+    //    //Worldgen.VEGETATION_MAP[i] = (byte) ((pixel & 0x0000ff00) >> 8);
+    //    Worldgen.CONTINENTALNESS_MAP[i] = (byte) (pixel & 0x000000ff);
+    //  }
+    //  LOGGER.info("Loaded sample map");
+    //} catch (IOException e) {
+    //  e.printStackTrace();
+    //}
 
     // Register the commonSetup method for modloading
     bus.addListener(this::registerDensityFunctionTypes);
@@ -71,7 +71,7 @@ public class Worldgen {
         helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "edge_ratio"), EdgeRatio.CODEC_HOLDER.codec());
         helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "land_ratio"), LandRatio.CODEC_HOLDER.codec());
         helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "lerp"), Lerp.CODEC_HOLDER.codec());
-        helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "raster_map"), RasterMap.CODEC_HOLDER.codec());
+        //helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "raster_map"), RasterMap.CODEC_HOLDER.codec()); // Unused for now
         helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "x_add_z"), XAddZ.CODEC_HOLDER.codec());
         helper.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "x_sub_z"), XSubZ.CODEC_HOLDER.codec());
     });
