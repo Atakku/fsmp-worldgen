@@ -74,14 +74,14 @@ public class MixinNoiseBasedChunkGenerator {
       int tY = c.getMaxBuildHeight();
       if ((p.x == Worldgen.CR || p.x == -Worldgen.CR - 1) && (p.z == Worldgen.CR || p.z == -Worldgen.CR - 1)) {
         for (int y = bY; y <= tY; y++) {
-          if (dim == NoiseGeneratorSettings.END.location() && y % 32 != 0)
+          if (dim == NoiseGeneratorSettings.END.location() && y % 70 != 0)
             continue;
           c.setBlockState(new BlockPos(x, y, z), bs, false);
         }
       } else if ((p.x == Worldgen.CR || p.x == -Worldgen.CR - 1) && (p.z < Worldgen.CR && p.z >= -Worldgen.CR)) {
         for (int o = bY; o < 16; o++) {
           for (int y = bY; y <= tY; y++) {
-            if (dim == NoiseGeneratorSettings.END.location() && y % 32 != 0)
+            if (dim == NoiseGeneratorSettings.END.location() && y % 70 != 0)
               continue;
             c.setBlockState(new BlockPos(x, y, z + p.z < 0 ? o : -o), bs, false);
           }
@@ -89,7 +89,7 @@ public class MixinNoiseBasedChunkGenerator {
       } else if ((p.z == Worldgen.CR || p.z == -Worldgen.CR - 1) && (p.x < Worldgen.CR && p.x >= -Worldgen.CR)) {
         for (int ox = bY; ox < 16; ox++) {
           for (int y = bY; y <= tY; y++) {
-            if (dim == NoiseGeneratorSettings.END.location() && y % 32 != 0)
+            if (dim == NoiseGeneratorSettings.END.location() && y % 70 != 0)
               continue;
             c.setBlockState(new BlockPos(x + p.x < 0 ? ox : -ox, y, z), bs, false);
           }
