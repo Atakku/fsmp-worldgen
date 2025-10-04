@@ -31,7 +31,7 @@ import dev.atakku.fsmp.worldgen.Worldgen;
 
 @Mixin(NoiseBasedChunkGenerator.class)
 public class MixinNoiseBasedChunkGenerator {
-  @Inject(at = @At("HEAD"), cancellable = true, method = "Lnet/minecraft/world/level/levelgen/NoiseBasedChunkGenerator;doCreateBiomes(Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/chunk/ChunkAccess;)V")
+  @Inject(at = @At("HEAD"), cancellable = true, method = "doCreateBiomes(Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/chunk/ChunkAccess;)V")
   private void doCreateBiomes(Executor e, RandomState nc, Blender b, StructureManager sa, ChunkAccess c,
       CallbackInfoReturnable<CompletableFuture<ChunkAccess>> cir) {
     if (Worldgen.isOutside(c.getPos())) {
@@ -39,7 +39,7 @@ public class MixinNoiseBasedChunkGenerator {
     }
   }
 
-  @Inject(at = @At("HEAD"), cancellable = true, method = "Lnet/minecraft/world/level/chunk/ChunkGenerator;applyCarvers(Lnet/minecraft/server/level/WorldGenRegion;JLnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/biome/BiomeManager;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/world/level/levelgen/GenerationStep$Carving;)V")
+  @Inject(at = @At("HEAD"), cancellable = true, method = "applyCarvers(Lnet/minecraft/server/level/WorldGenRegion;JLnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/biome/BiomeManager;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/world/level/levelgen/GenerationStep$Carving;)V")
   public void applyCarvers(WorldGenRegion cr, long s, RandomState nc, BiomeManager ba, StructureManager sa,
       ChunkAccess c, GenerationStep.Carving cs, CallbackInfo ci) {
     if (Worldgen.isOutside(c.getPos())) {
@@ -47,7 +47,7 @@ public class MixinNoiseBasedChunkGenerator {
     }
   }
 
-  @Inject(at = @At("HEAD"), cancellable = true, method = "Lnet/minecraft/world/level/levelgen/NoiseBasedChunkGenerator;buildSurface(Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/world/level/levelgen/WorldGenerationContext;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/biome/BiomeManager;Lnet/minecraft/core/Registry;Lnet/minecraft/world/level/levelgen/blending/Blender;)V")
+  @Inject(at = @At("HEAD"), cancellable = true, method = "buildSurface(Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/world/level/levelgen/WorldGenerationContext;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/biome/BiomeManager;Lnet/minecraft/core/Registry;Lnet/minecraft/world/level/levelgen/blending/Blender;)V")
   public void buildSurface(ChunkAccess c, WorldGenerationContext hc, RandomState nc, StructureManager sa,
       BiomeManager ba, Registry<Biome> br, Blender b, CallbackInfo ci) {
     if (Worldgen.isOutside(c.getPos())) {
@@ -55,14 +55,14 @@ public class MixinNoiseBasedChunkGenerator {
     }
   }
 
-  @Inject(at = @At("HEAD"), cancellable = true, method = "Lnet/minecraft/world/level/chunk/ChunkGenerator;spawnOriginalMobs(Lnet/minecraft/server/level/WorldGenRegion;)V")
+  @Inject(at = @At("HEAD"), cancellable = true, method = "spawnOriginalMobs(Lnet/minecraft/server/level/WorldGenRegion;)V")
   private void spawnOriginalMobs(WorldGenRegion r, CallbackInfo ci) {
     if (Worldgen.isOutside(r.getCenter())) {
       ci.cancel();
     }
   }
 
-  @Inject(at = @At("HEAD"), cancellable = true, method = "Lnet/minecraft/world/level/levelgen/NoiseBasedChunkGenerator;doFill(Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/chunk/ChunkAccess;II)Lnet/minecraft/world/level/chunk/ChunkAccess;")
+  @Inject(at = @At("HEAD"), cancellable = true, method = "doFill(Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/chunk/ChunkAccess;II)Lnet/minecraft/world/level/chunk/ChunkAccess;")
   private void doFill(Executor e, Blender b, RandomState nc, StructureManager sa, ChunkAccess c,
       CallbackInfoReturnable<CompletableFuture<ChunkAccess>> cir) {
     ChunkPos p = c.getPos();
