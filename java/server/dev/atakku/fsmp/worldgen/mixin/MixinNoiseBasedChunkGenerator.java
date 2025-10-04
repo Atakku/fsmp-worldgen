@@ -30,9 +30,9 @@ import dev.atakku.fsmp.worldgen.Worldgen;
 public class MixinNoiseBasedChunkGenerator {
   @Inject(at = @At("HEAD"), cancellable = true, method = "doCreateBiomes(Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/chunk/ChunkAccess;)V")
   private void doCreateBiomes(Blender b, RandomState nc, StructureManager sa, ChunkAccess c,
-      CallbackInfoReturnable<ChunkAccess> cir) {
+      CallbackInfo ci) {
     if (Worldgen.isOutside(c.getPos())) {
-      cir.setReturnValue(c);
+      ci.cancel();
     }
   }
 
