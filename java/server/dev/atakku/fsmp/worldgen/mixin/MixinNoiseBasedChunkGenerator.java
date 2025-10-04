@@ -70,7 +70,8 @@ public class MixinNoiseBasedChunkGenerator {
 
       BlockState bs = getState(dim);
       int bY = c.getMinBuildHeight();
-      int tY = dim == NoiseGeneratorSettings.NETHER.location() ? c.getMaxBuildHeight() : 62;
+      //int tY = dim == NoiseGeneratorSettings.NETHER.location() ? c.getMaxBuildHeight() : 62;
+      int tY = c.getMaxBuildHeight();
       if ((p.x == Worldgen.CR || p.x == -Worldgen.CR - 1) && (p.z == Worldgen.CR || p.z == -Worldgen.CR - 1)) {
         for (int y = bY; y <= tY; y++) {
           if (dim == NoiseGeneratorSettings.END.location() && y % 3 == 0)
