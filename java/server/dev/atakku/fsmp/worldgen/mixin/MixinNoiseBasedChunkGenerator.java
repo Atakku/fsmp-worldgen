@@ -1,7 +1,5 @@
 package dev.atakku.fsmp.worldgen.mixin;
 
-import java.util.concurrent.CompletableFuture;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -32,9 +30,9 @@ import dev.atakku.fsmp.worldgen.Worldgen;
 public class MixinNoiseBasedChunkGenerator {
   @Inject(at = @At("HEAD"), cancellable = true, method = "doCreateBiomes(Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/chunk/ChunkAccess;)V")
   private void doCreateBiomes(Blender b, RandomState nc, StructureManager sa, ChunkAccess c,
-      CallbackInfoReturnable<CompletableFuture<ChunkAccess>> cir) {
+      CallbackInfoReturnable<ChunkAccess> cir) {
     if (Worldgen.isOutside(c.getPos())) {
-      cir.setReturnValue(CompletableFuture.completedFuture(c));
+      cir.setReturnValue(c);
     }
   }
 
@@ -63,7 +61,7 @@ public class MixinNoiseBasedChunkGenerator {
 
   @Inject(at = @At("HEAD"), cancellable = true, method = "doFill(Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/chunk/ChunkAccess;II)Lnet/minecraft/world/level/chunk/ChunkAccess;")
   private void doFill(Blender b, StructureManager sa, RandomState nc, ChunkAccess c, int mY, int cY,
-      CallbackInfoReturnable<CompletableFuture<ChunkAccess>> cir) {
+      CallbackInfoReturnable<ChunkAccess> cir) {
     ChunkPos p = c.getPos();
     if (Worldgen.isOutside(p)) {
       int x = p.x < 0 ? p.x * 16 + 15 : p.x * 16;
@@ -97,7 +95,7 @@ public class MixinNoiseBasedChunkGenerator {
         }
       }
 
-      cir.setReturnValue(CompletableFuture.completedFuture(c));
+      cir.setReturnValue(c);
     }
   }
 
