@@ -2,7 +2,7 @@
   "type": "minecraft:flat_cache",
   "argument": {
     "type": "hrt_worldgen:lerp",
-    "delta": 1.0,
+    "delta": 0.8,
     "start": {
       "type": "tectonic:config_noise",
       "noise": "minecraft:vegetation",
