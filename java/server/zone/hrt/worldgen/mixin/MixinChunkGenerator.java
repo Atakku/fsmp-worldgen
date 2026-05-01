@@ -1,4 +1,4 @@
-package dev.atakku.fsmp.worldgen.mixin;
+package zone.hrt.worldgen.mixin;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.level.StructureManager;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import dev.atakku.fsmp.worldgen.Worldgen;
+import zone.hrt.worldgen.Worldgen;
 
 @Mixin(ChunkGenerator.class)
 public class MixinChunkGenerator {

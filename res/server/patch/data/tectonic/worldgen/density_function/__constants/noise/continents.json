@@ -4,32 +4,28 @@
     "type": "fsmp_worldgen:edge_ratio"
   },
   "start": {
-    "type": "minecraft:max",
-    "argument1": 0.25,
-    "argument2": {
-      "type": "minecraft:add",
-      "argument1": {
+    "type": "minecraft:add",
+    "argument1": {
+      "type": "fsmp_worldgen:lerp",
+      "delta": {
         "type": "fsmp_worldgen:lerp",
         "delta": {
-          "type": "fsmp_worldgen:lerp",
-          "delta": {
-            "type": "fsmp_worldgen:land_ratio"
-          },
-          "start": -3,
-          "end": 1
+          "type": "fsmp_worldgen:land_ratio"
         },
-        "start": 1,
-        "end": 0
+        "start": -3,
+        "end": 1
       },
-      "argument2": {
-        "type": "minecraft:abs",
-        "argument": {
-          "type": "tectonic:config_noise",
-          "noise": "tectonic:parameter/continentalness",
-          "key": "continents",
-          "shift_x": "minecraft:shift_x",
-          "shift_z": "minecraft:shift_z"
-        }
+      "start": 1,
+      "end": 0
+    },
+    "argument2": {
+      "type": "minecraft:abs",
+      "argument": {
+        "type": "tectonic:config_noise",
+        "noise": "tectonic:parameter/continentalness",
+        "key": "continents",
+        "shift_x": "minecraft:shift_x",
+        "shift_z": "minecraft:shift_z"
       }
     }
   },

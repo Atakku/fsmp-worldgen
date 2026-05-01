@@ -1,8 +1,8 @@
-// Copyright 2025 Atakku <https://atakku.dev>
+// Copyright 2026 Atakku <https://atakku.dev>
 //
 // This project is dual licensed under MIT and Apache.
 
-package dev.atakku.fsmp.worldgen.func;
+package zone.hrt.worldgen.func;
 
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 

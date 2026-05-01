@@ -1,4 +1,4 @@
-package dev.atakku.fsmp.worldgen.mixin;
+package zone.hrt.worldgen.mixin;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import dev.atakku.fsmp.worldgen.Worldgen;
+import zone.hrt.worldgen.Worldgen;
 
 @Mixin(NoiseBasedChunkGenerator.class)
 public class MixinNoiseBasedChunkGenerator {

@@ -1,15 +1,15 @@
-// Copyright 2025 Atakku <https://atakku.dev>
+// Copyright 2026 Atakku <https://atakku.dev>
 //
 // This project is dual licensed under MIT and Apache.
 
-package dev.atakku.fsmp.worldgen.func;
+package zone.hrt.worldgen.func;
 
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.world.level.levelgen.DensityFunction;
 
 import com.mojang.serialization.MapCodec;
 
-import dev.atakku.fsmp.worldgen.Worldgen;
+import zone.hrt.worldgen.Worldgen;
 
 public class EdgeRatio implements DensityFunction.SimpleFunction {
   public static final KeyDispatchDataCodec<EdgeRatio> CODEC_HOLDER = KeyDispatchDataCodec

@@ -2,7 +2,7 @@
   "type": "minecraft:flat_cache",
   "argument": {
     "type": "fsmp_worldgen:lerp",
-    "delta": 0.75,
+    "delta": 1.0,
     "start": {
       "type": "tectonic:config_noise",
       "noise": "minecraft:temperature",
