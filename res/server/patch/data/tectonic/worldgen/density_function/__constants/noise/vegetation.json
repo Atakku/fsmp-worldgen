@@ -1,7 +1,7 @@
 {
   "type": "minecraft:flat_cache",
   "argument": {
-    "type": "fsmp_worldgen:lerp",
+    "type": "hrt_worldgen:lerp",
     "delta": 1.0,
     "start": {
       "type": "tectonic:config_noise",
@@ -18,7 +18,7 @@
         "type": "minecraft:mul",
         "argument1": 0.000075,
         "argument2": {
-          "type": "fsmp_worldgen:x_sub_z"
+          "type": "hrt_worldgen:x_sub_z"
         }
       }
     }

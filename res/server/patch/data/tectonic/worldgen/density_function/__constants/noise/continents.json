@@ -1,16 +1,16 @@
 {
-  "type": "fsmp_worldgen:lerp",
+  "type": "hrt_worldgen:lerp",
   "delta": {
-    "type": "fsmp_worldgen:edge_ratio"
+    "type": "hrt_worldgen:edge_ratio"
   },
   "start": {
     "type": "minecraft:add",
     "argument1": {
-      "type": "fsmp_worldgen:lerp",
+      "type": "hrt_worldgen:lerp",
       "delta": {
-        "type": "fsmp_worldgen:lerp",
+        "type": "hrt_worldgen:lerp",
         "delta": {
-          "type": "fsmp_worldgen:land_ratio"
+          "type": "hrt_worldgen:land_ratio"
         },
         "start": -3,
         "end": 1
