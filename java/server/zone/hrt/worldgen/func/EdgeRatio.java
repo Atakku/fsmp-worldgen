@@ -7,31 +7,38 @@ package zone.hrt.worldgen.func;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.world.level.levelgen.DensityFunction;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import zone.hrt.worldgen.Worldgen;
-
-public class EdgeRatio implements DensityFunction.SimpleFunction {
+public record EdgeRatio(DensityFunction size, DensityFunction end) implements DensityFunction.SimpleFunction {
   public static final KeyDispatchDataCodec<EdgeRatio> CODEC_HOLDER = KeyDispatchDataCodec
-      .of(MapCodec.unit(EdgeRatio::new));
+      .of(RecordCodecBuilder.mapCodec(instance -> instance.group(
+          DensityFunction.HOLDER_HELPER_CODEC.fieldOf("size").forGetter(EdgeRatio::size),
+          DensityFunction.HOLDER_HELPER_CODEC.fieldOf("end").forGetter(EdgeRatio::end))
+          .apply(instance, EdgeRatio::new)));
 
   public double compute(DensityFunction.FunctionContext pos) {
-    int distX = Math.min(Math.abs(pos.blockX()), Worldgen.END);
-    int distZ = Math.min(Math.abs(pos.blockZ()), Worldgen.END);
+    double size = this.size.compute(pos);
+    double end = this.end.compute(pos);
 
-    int edgeX = distX - Worldgen.EDGE;
-    int edgeZ = distZ - Worldgen.EDGE;
+    double start = end - size;
+    double edge = start - size;
+
+    double distX = Math.min(Math.abs(pos.blockX()), end);
+    double distZ = Math.min(Math.abs(pos.blockZ()), end);
+
+    double edgeX = distX - edge;
+    double edgeZ = distZ - edge;
     if (edgeX > 0 && edgeZ > 0) {
-      double dist = Math.sqrt(edgeX * edgeX + edgeZ * edgeZ) - Worldgen.SIZE;
+      double dist = Math.sqrt(edgeX * edgeX + edgeZ * edgeZ) - size;
       if (dist < 0)
         return 0;
-      if (dist > Worldgen.SIZE)
+      if (dist > size)
         return 1;
-      return (dist / (Worldgen.SIZE));
+      return dist / size;
     }
 
-    int point = Math.max(distX, distZ) - Worldgen.START;
-    return ((double) Math.max(0, point) / (double) Worldgen.SIZE);
+    double point = Math.max(distX, distZ) - start;
+    return Math.max(0, point) / size;
   }
 
   @Override

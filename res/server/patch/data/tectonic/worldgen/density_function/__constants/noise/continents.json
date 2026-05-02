@@ -1,31 +1,52 @@
 {
   "type": "hrt_worldgen:lerp",
   "delta": {
-    "type": "hrt_worldgen:edge_ratio"
+    "type": "hrt_worldgen:edge_ratio",
+    "end": 13312.0,
+    "size": 2048.0
   },
   "start": {
-    "type": "minecraft:add",
-    "argument1": {
-      "type": "hrt_worldgen:lerp",
-      "delta": {
+    "type": "hrt_worldgen:lerp",
+    "delta": {
+      "type": "hrt_worldgen:edge_ratio",
+      "end": 10240.0,
+      "size": 2048.0
+    },
+    "start": {
+      "type": "minecraft:add",
+      "argument1": {
         "type": "hrt_worldgen:lerp",
         "delta": {
-          "type": "hrt_worldgen:land_ratio"
+          "type": "hrt_worldgen:lerp",
+          "delta": {
+            "type": "hrt_worldgen:land_ratio",
+            "start": 8192
+          },
+          "start": -3,
+          "end": 1
         },
-        "start": -3,
+        "start": 2,
         "end": 1
       },
-      "start": 1,
-      "end": 0
+      "argument2": {
+        "type": "minecraft:mul",
+        "argument1": 1,
+        "argument2": {
+          "type": "minecraft:noise",
+          "noise": "hrt_worldgen:fuzz",
+          "xz_scale": 1.0,
+          "y_scale": 1.0
+        }
+      }
     },
-    "argument2": {
-      "type": "minecraft:abs",
-      "argument": {
-        "type": "tectonic:config_noise",
-        "noise": "tectonic:parameter/continentalness",
-        "key": "continents",
-        "shift_x": "minecraft:shift_x",
-        "shift_z": "minecraft:shift_z"
+    "end": {
+      "type": "minecraft:mul",
+      "argument1": 0.05,
+      "argument2": {
+        "type": "minecraft:noise",
+        "noise": "hrt_worldgen:fuzz",
+        "xz_scale": 1.0,
+        "y_scale": 1.0
       }
     }
   },

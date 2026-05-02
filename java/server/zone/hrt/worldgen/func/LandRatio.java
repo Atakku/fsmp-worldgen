@@ -7,18 +7,21 @@ package zone.hrt.worldgen.func;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.world.level.levelgen.DensityFunction;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import zone.hrt.worldgen.Worldgen;
-
-public class LandRatio implements DensityFunction.SimpleFunction {
-  public static final KeyDispatchDataCodec<LandRatio> CODEC_HOLDER = KeyDispatchDataCodec.of(MapCodec.unit(LandRatio::new));
+public record LandRatio(DensityFunction start) implements DensityFunction.SimpleFunction {
+  public static final KeyDispatchDataCodec<LandRatio> CODEC_HOLDER = KeyDispatchDataCodec
+      .of(RecordCodecBuilder.mapCodec(instance -> instance.group(
+          DensityFunction.HOLDER_HELPER_CODEC.fieldOf("start").forGetter(LandRatio::start))
+          .apply(instance, LandRatio::new)));
 
   @Override
   public double compute(DensityFunction.FunctionContext pos) {
-    int distX = Math.min(Math.abs(pos.blockX()), Worldgen.START);
-    int distZ = Math.min(Math.abs(pos.blockZ()), Worldgen.START);
-    return ((double) Math.max(distX, distZ)) / (double) Worldgen.START;
+    double start = this.start.compute(pos);
+
+    double distX = Math.min(Math.abs(pos.blockX()), start);
+    double distZ = Math.min(Math.abs(pos.blockZ()), start);
+    return (Math.max(distX, distZ)) / start;
   }
 
   @Override

@@ -33,11 +33,8 @@ public class Worldgen {
   public static final String MOD_ID = "hrt_worldgen";
   public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-  public static final int SIZE = 1536;
-  public static final int END = 10240;
-  public static final int START = END - SIZE;
-  public static final int EDGE = START - SIZE;
-  public static final int CR = END / 16;
+  public static final int BORDER = 14 * 64;
+  public static final int BORDER_SOFT = 14 * 64 - 4;
 
   public Worldgen(IEventBus bus) {
     bus.addListener(this::registerDensityFunctionTypes);
@@ -78,7 +75,7 @@ public class Worldgen {
     }
   }
 
-  public static boolean isOutside(ChunkPos p) {
-    return p.x >= CR || p.z >= CR || p.x < -CR || p.z < -CR;
+  public static boolean isOutside(ChunkPos p, int b) {
+    return p.x >= b || p.z >= b || p.x < -b || p.z < -b;
   }
 }
