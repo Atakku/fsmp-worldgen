@@ -6,15 +6,15 @@
     "size": 2048.0
   },
   "start": {
-    "type": "hrt_worldgen:lerp",
-    "delta": {
-      "type": "hrt_worldgen:edge_ratio",
-      "end": 10240.0,
-      "size": 2048.0
-    },
-    "start": {
-      "type": "minecraft:add",
-      "argument1": {
+    "type": "minecraft:add",
+    "argument1": {
+      "type": "hrt_worldgen:lerp",
+      "delta": {
+        "type": "hrt_worldgen:edge_ratio",
+        "end": 11264.0,
+        "size": 4096.0
+      },
+      "start": {
         "type": "hrt_worldgen:lerp",
         "delta": {
           "type": "hrt_worldgen:lerp",
@@ -28,20 +28,11 @@
         "start": 2,
         "end": 1
       },
-      "argument2": {
-        "type": "minecraft:mul",
-        "argument1": 1,
-        "argument2": {
-          "type": "minecraft:noise",
-          "noise": "hrt_worldgen:fuzz",
-          "xz_scale": 1.0,
-          "y_scale": 1.0
-        }
-      }
+      "end": 0
     },
-    "end": {
+    "argument2": {
       "type": "minecraft:mul",
-      "argument1": 0.05,
+      "argument1": 0.08,
       "argument2": {
         "type": "minecraft:noise",
         "noise": "hrt_worldgen:fuzz",
