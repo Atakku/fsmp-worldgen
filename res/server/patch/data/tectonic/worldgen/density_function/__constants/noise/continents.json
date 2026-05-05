@@ -3,7 +3,7 @@
   "delta": {
     "type": "hrt_worldgen:edge_ratio",
     "end": 13312.0,
-    "size": 2048.0
+    "size": 1024.0
   },
   "start": {
     "type": "minecraft:add",
@@ -11,7 +11,7 @@
       "type": "hrt_worldgen:lerp",
       "delta": {
         "type": "hrt_worldgen:edge_ratio",
-        "end": 11264.0,
+        "end": 12288.0,
         "size": 4096.0
       },
       "start": {
